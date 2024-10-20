@@ -1,9 +1,10 @@
 # Cloud technologies and services
 
-- Names
-- Names
-- Names
-- Names
+- Маатук Айхам
+- Олойеде Абдуллах
+- Олойеде Джибрил
+- Арройо Николас
+- Опалев Владимир
 
   <br/>
 
