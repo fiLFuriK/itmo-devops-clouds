@@ -1,0 +1,47 @@
+name: Good CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        id: cache-id
+        with:
+          cache: npm-dependencies
+          path: ~/.npm
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-id.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+  test:
+    runs-on: ubuntu-20.04
+    needs: build
+    steps:
+      - name: Run tests
+          run: npm run test
+
+  deploy:
+    runs-on: ubuntu-20.04
+    needs: test
+    steps:
+      - name: Deploy
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          USERNAME: ${{ secrets.USERNAME }}
+          DEPLOYMENT_PATH: ${{ secrets.DEPLOYMENT_PATH }}
+        run: |
+          rsync -avz --delete ./dist/ $USERNAME@$SERVER_IP:$DEPLOYMENT_PATH
