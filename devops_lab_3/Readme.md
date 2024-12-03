@@ -132,3 +132,9 @@ jobs:
 
 6. Secure handling of credentials:
    Server credentials (SERVER_IP, USERNAME, DEPLOYMENT_PATH) are stored as GitHub secrets and accessed securely during deployment. Secrets are encrypted and not exposed in the code or logs, ensuring better security for sensitive information.
+
+## GitHub Actions
+
+
+<p style="text-align:center;"><img src="./pipline (test).png" width=600></p>
+
